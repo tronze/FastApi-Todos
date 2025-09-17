@@ -7,13 +7,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <h1>To-Do List</h1>
-    <ul id="todo-list"></ul>
-    <form id="todo-form">
-        <input type="text" id="title" placeholder="Title" required>
-        <input type="text" id="description" placeholder="Description" required>
-        <button type="submit">Add To-Do</button>
-    </form>
+    <div class="container-fluid">
+        <h1>To-Do List</h1>
+        <ul id="todo-list"></ul>
+        <form id="todo-form" style="max-width: 300px;">
+            <input class="form-control" type="text" id="title" placeholder="Title" required>
+            <input class="form-control mt-1" type="text" id="description" placeholder="Description" required>
+            <button type="submit" class="btn btn-success mt-1">Add To-Do</button>
+        </form>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
         async function fetchTodos() {
@@ -26,9 +28,11 @@
                 li.textContent = `${todo.title}: ${todo.description} (Completed: ${todo.completed})`;
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
+                editButton.className = "btn btn-primary";
                 editButton.onclick = () => editTodo(todo.id);
                 const deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
+                deleteButton.className = "btn btn-danger";
                 deleteButton.onclick = () => deleteTodo(todo.id);
                 li.appendChild(editButton);
                 li.appendChild(deleteButton);
