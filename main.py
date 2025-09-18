@@ -1,10 +1,13 @@
 import json
 import os
+import time
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, HTTPException, Request, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from starlette import status
 
 app = FastAPI()
 
@@ -49,12 +52,16 @@ def read_root(request: Request):
     )
 
 # 신규 To-Do 항목 추가
-@app.post("/todos", response_model=TodoItem)
-def create_todo(todo: TodoItem):
+@app.post("/", response_class=RedirectResponse)
+def create_todo(todo: Annotated[TodoItem, Form()]):
+    data = todo.model_dump()
+    data['id'] = int(time.time())
+    data['completed'] = False
     todos = load_todos()
-    todos.append(todo.dict())
+    todos.append(data)
     save_todos(todos)
-    return todo
+    redirect_url = app.url_path_for("read_root")
+    return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
 # To-Do 항목 수정
 @app.put("/todos/{todo_id}", response_model=TodoItem)
