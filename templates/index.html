@@ -26,14 +26,14 @@
                     {% for todo in todos %}
                     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start{% if todo.completed %} list-group-item-success{% endif %}">
                         <div class="d-flex w-100 justify-content-between">
-                          <h5>{{ todo.title }}</h5>
+                          <h5 class="{% if todo.completed %}text-decoration-line-through text-secondary{% endif %}">{{ todo.title }}</h5>
                           <small>ID : {{ todo.id }}</small>
                         </div>
                         <div class="d-lg-flex d-block w-100 justify-content-between">
-                            <div class="pe-lg-3 pe-0">
+                            <div class="pe-lg-3 pe-0{% if todo.completed %} text-decoration-line-through text-secondary{% endif %}">
                                 <p>{{ todo.description }}</p>
                             </div>
-                            <div class="d-flex flex-column gap-1 mt-lg-0 mt-3">
+                            <div class="d-flex flex-column gap-1 mt-lg-0 mt-3 text-decoration-none">
                                 <button class="btn btn-primary btn-block">Edit</button>
                                 <button class="btn btn-danger">Delete</button>
                             </div>
