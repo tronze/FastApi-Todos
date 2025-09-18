@@ -1,10 +1,15 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
 import json
 import os
 
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
+
 app = FastAPI()
+
+# Jinja Template Loading을 위한 초기화.
+templates = Jinja2Templates(directory="templates")
 
 # To-Do 항목 모델
 class TodoItem(BaseModel):
@@ -62,7 +67,7 @@ def delete_todo(todo_id: int):
 
 # HTML 파일 서빙
 @app.get("/", response_class=HTMLResponse)
-def read_root():
-    with open("templates/index.html", "r") as file:
-        content = file.read()
-    return HTMLResponse(content=content)
+def read_root(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="index.html"
+    )
