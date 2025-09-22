@@ -5,6 +5,7 @@ from typing import Annotated
 
 from fastapi import FastAPI, HTTPException, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette import status
@@ -13,6 +14,8 @@ app = FastAPI()
 
 # Jinja Template Loading을 위한 초기화.
 templates = Jinja2Templates(directory="templates")
+# Static file serving
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 class TodoItem(BaseModel):
