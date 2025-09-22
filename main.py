@@ -22,13 +22,16 @@ class TodoItem(BaseModel):
     title: str
     description: str
 
+
 # To-Do 항목 모델
 class TodoItemOut(TodoItem):
     id: int
     completed: bool
 
+
 # JSON 파일 경로
 TODO_FILE = "todo.json"
+
 
 # JSON 파일에서 To-Do 항목 로드
 def load_todos():
@@ -39,6 +42,7 @@ def load_todos():
                 key=lambda x: (x["completed"], -x["id"])
             )
     return []
+
 
 # JSON 파일에 To-Do 항목 저장
 def save_todos(todos):
@@ -54,6 +58,7 @@ def read_root(request: Request):
         request=request, name="index.html", context={"todos": todos}
     )
 
+
 # 신규 To-Do 항목 추가
 @app.post("/", response_class=RedirectResponse)
 def create_todo(todo: Annotated[TodoItem, Form()]):
@@ -66,6 +71,7 @@ def create_todo(todo: Annotated[TodoItem, Form()]):
     redirect_url = app.url_path_for("read_root")
     return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
+
 # To-Do 항목 수정
 @app.post("/edit", response_class=RedirectResponse)
 def update_todo(updated_todo: Annotated[TodoItemOut, Form()]):
@@ -76,6 +82,7 @@ def update_todo(updated_todo: Annotated[TodoItemOut, Form()]):
             save_todos(todos)
     redirect_url = app.url_path_for("read_root")
     return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
+
 
 # To-Do 항목 삭제
 @app.post("/delete", response_class=RedirectResponse)
