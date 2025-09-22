@@ -75,9 +75,10 @@ def update_todo(updated_todo: Annotated[TodoItemOut, Form()]):
     return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
 # To-Do 항목 삭제
-@app.delete("/todos/{todo_id}", response_model=dict)
-def delete_todo(todo_id: int):
+@app.post("/delete", response_class=RedirectResponse)
+def delete_todo(todo_id: Annotated[int, Form()]):
     todos = load_todos()
     todos = [todo for todo in todos if todo["id"] != todo_id]
     save_todos(todos)
-    return {"message": "To-Do item deleted"}
+    redirect_url = app.url_path_for("read_root")
+    return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
