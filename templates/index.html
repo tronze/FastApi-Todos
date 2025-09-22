@@ -34,7 +34,17 @@
                                 <p>{{ todo.description }}</p>
                             </div>
                             <div class="d-flex flex-column gap-1 mt-lg-0 mt-3 text-decoration-none">
-                                <button class="btn btn-primary btn-block">Edit</button>
+                                <button
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edit-modal"
+                                    data-bs-id="{{ todo.id }}"
+                                    data-bs-title="{{ todo.title }}"
+                                    data-bs-description="{{ todo.description }}"
+                                    data-bs-completed="{{ todo.completed }}"
+                                >
+                                    Edit
+                                </button>
                                 <button class="btn btn-danger">Delete</button>
                             </div>
                         </div>
@@ -60,5 +70,28 @@
     </div>
     {% include 'modals/edit.html' %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const editModal = document.getElementById('edit-modal')
+        if (editModal) {
+          editModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+
+            const id = button.getAttribute('data-bs-id');
+            const title = button.getAttribute('data-bs-title');
+            const description = button.getAttribute('data-bs-description');
+            const completed = button.getAttribute('data-bs-completed');
+
+            const modalBodyId = editModal.querySelector('#id');
+            const modalBodyTitle = editModal.querySelector('#title');
+            const modalBodyDescription = editModal.querySelector('#description');
+            const modalBodyCompleted = editModal.querySelector('#completed');
+
+            modalBodyId.value = id;
+            modalBodyTitle.value = title;
+            modalBodyDescription.value = description;
+            modalBodyCompleted.value = completed;
+          })
+        }
+    </script>
 </body>
 </html>
