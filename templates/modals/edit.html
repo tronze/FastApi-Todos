@@ -1,0 +1,36 @@
+<div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Todo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <form method="post" action="/edit">
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="title">Title</label>
+              <input class="form-control" type="text" id="title" name="title" placeholder="Title" required>
+          </div>
+          <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" name="description" placeholder="Description"
+                        required></textarea>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+              <select class="form-select" aria-label="Completed" id="completed" name="completed">
+                  <option>---------</option>
+                  <option value="True">Completed</option>
+                  <option value="False">Incomplete</option>
+              </select>
+          </div>
+          <input class="form-control" type="hidden" id="id" name="id" value="" required>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
