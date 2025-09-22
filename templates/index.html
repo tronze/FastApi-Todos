@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/static/icons/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/static/icons/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/static/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/static/icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicon-16x16.png">
@@ -21,40 +21,43 @@
     <meta name="msapplication-TileImage" content="/static/icons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <title>To-Do List</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container p-3">
-        <div class="d-flex align-items-center gap-1 mb-2">
-            <img src="/static/icons/logo.png" width="48" alt="logo" />
-            <h1 class="mb-0">To-Do List</h1>
+<div class="container p-3">
+    <div class="d-flex align-items-center gap-1 mb-2">
+        <img src="/static/icons/logo.png" width="48" alt="logo"/>
+        <h1 class="mb-0">To-Do List</h1>
+    </div>
+    <div class="row">
+        <div class="d-flex gap-1 align-items-center">
+            <div style="width: 0; height: 0; padding: 8px; border-radius: 999px;"
+                 class="list-group-item list-group-item-success border"></div>
+            <p class="mb-0">Completed todos will be displayed with green background.</p>
         </div>
-        <div class="row">
-            <div class="d-flex gap-1 align-items-center">
-                <div style="width: 0; height: 0; padding: 8px; border-radius: 999px;" class="list-group-item list-group-item-success border"></div>
-                <p class="mb-0">Completed todos will be displayed with green background.</p>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-8 col-12 order-lg-1 order-2">
+            {% if todos|length == 0 %}
+            <div class="d-flex border rounded p-5 justify-content-center align-items-center">
+                <h2>Oops, you seems to have no work to do</h2>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-lg-8 col-12 order-lg-1 order-2">
-                {% if todos|length == 0 %}
-                    <div class="d-flex border rounded p-5 justify-content-center align-items-center">
-                        <h2>Oops, you seems to have no work to do</h2>
+            {% endif %}
+            <div class="list-group">
+                {% for todo in todos %}
+                <div class="list-group-item list-group-item flex-column align-items-start{% if todo.completed %} list-group-item-success{% endif %}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="{% if todo.completed %}text-decoration-line-through text-secondary{% endif %}">{{
+                            todo.title }}</h5>
+                        <small>ID : {{ todo.id }}</small>
                     </div>
-                {% endif %}
-                <div class="list-group">
-                    {% for todo in todos %}
-                    <div class="list-group-item list-group-item flex-column align-items-start{% if todo.completed %} list-group-item-success{% endif %}">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="{% if todo.completed %}text-decoration-line-through text-secondary{% endif %}">{{ todo.title }}</h5>
-                          <small>ID : {{ todo.id }}</small>
+                    <div class="d-lg-flex d-block w-100 justify-content-between">
+                        <div class="pe-lg-3 pe-0{% if todo.completed %} text-decoration-line-through text-secondary{% endif %}">
+                            <p>{{ todo.description }}</p>
                         </div>
-                        <div class="d-lg-flex d-block w-100 justify-content-between">
-                            <div class="pe-lg-3 pe-0{% if todo.completed %} text-decoration-line-through text-secondary{% endif %}">
-                                <p>{{ todo.description }}</p>
-                            </div>
-                            <div class="d-flex flex-column gap-1 mt-lg-0 mt-3 text-decoration-none">
-                                <button
+                        <div class="d-flex flex-column gap-1 mt-lg-0 mt-3 text-decoration-none">
+                            <button
                                     class="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#edit-modal"
@@ -62,47 +65,50 @@
                                     data-bs-title="{{ todo.title }}"
                                     data-bs-description="{{ todo.description }}"
                                     data-bs-completed="{{ todo.completed }}"
-                                >
-                                    Edit
-                                </button>
-                                <button
+                            >
+                                Edit
+                            </button>
+                            <button
                                     class="btn btn-danger"
                                     data-bs-toggle="modal"
                                     data-bs-target="#delete-modal"
                                     data-bs-id="{{ todo.id }}"
                                     data-bs-title="{{ todo.title }}"
-                                >
-                                    Delete
-                                </button>
-                            </div>
+                            >
+                                Delete
+                            </button>
                         </div>
-                      </div>
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-12 mt-lg-0 my-3 order-lg-2 order-1">
-                <form id="todo-form" class="border p-3 rounded position-sticky sticky-top" method="post">
-                    <h5>Add New Item</h5>
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input class="form-control" type="text" id="title" name="title" placeholder="Title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" placeholder="Description" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success mt-3">Add To-Do</button>
-                </form>
+                {% endfor %}
             </div>
         </div>
+        <div class="col-lg-4 col-12 mt-lg-0 my-3 order-lg-2 order-1">
+            <form id="todo-form" class="border p-3 rounded position-sticky sticky-top" method="post">
+                <h5>Add New Item</h5>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="title" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="Description"
+                              required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Add To-Do</button>
+            </form>
+        </div>
     </div>
-    {% include 'modals/edit.html' %}
-    {% include 'modals/delete.html' %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        const editModal = document.getElementById('edit-modal');
-        if (editModal) {
-          editModal.addEventListener('show.bs.modal', event => {
+</div>
+{% include 'modals/edit.html' %}
+{% include 'modals/delete.html' %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    const editModal = document.getElementById('edit-modal');
+    if (editModal) {
+        editModal.addEventListener('show.bs.modal', event => {
             const button = event.relatedTarget;
 
             const id = button.getAttribute('data-bs-id');
@@ -119,25 +125,25 @@
             modalBodyTitle.value = title;
             modalBodyDescription.value = description;
             modalBodyCompleted.value = completed;
-          });
-        }
-    </script>
-    <script type="text/javascript">
-        const deleteModal = document.getElementById('delete-modal');
-        if (deleteModal) {
-            deleteModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget;
+        });
+    }
+</script>
+<script type="text/javascript">
+    const deleteModal = document.getElementById('delete-modal');
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
 
-                const id = button.getAttribute('data-bs-id');
-                const title = button.getAttribute('data-bs-title');
+            const id = button.getAttribute('data-bs-id');
+            const title = button.getAttribute('data-bs-title');
 
-                const modalBodyId = deleteModal.querySelector('#id');
-                const modalBodyTitle = deleteModal.querySelector('#todo-title-to-delete');
+            const modalBodyId = deleteModal.querySelector('#id');
+            const modalBodyTitle = deleteModal.querySelector('#todo-title-to-delete');
 
-                modalBodyId.value = id;
-                modalBodyTitle.textContent = title;
-            });
-        }
-    </script>
+            modalBodyId.value = id;
+            modalBodyTitle.textContent = title;
+        });
+    }
+</script>
 </body>
 </html>
