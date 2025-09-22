@@ -64,15 +64,15 @@ def create_todo(todo: Annotated[TodoItem, Form()]):
     return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
 # To-Do 항목 수정
-@app.put("/todos/{todo_id}", response_model=TodoItem)
-def update_todo(todo_id: int, updated_todo: TodoItem):
+@app.post("/edit", response_class=RedirectResponse)
+def update_todo(updated_todo: Annotated[TodoItemOut, Form()]):
     todos = load_todos()
     for todo in todos:
-        if todo["id"] == todo_id:
-            todo.update(updated_todo.dict())
+        if todo["id"] == updated_todo.id:
+            todo.update(updated_todo.model_dump())
             save_todos(todos)
-            return updated_todo
-    raise HTTPException(status_code=404, detail="To-Do item not found")
+    redirect_url = app.url_path_for("read_root")
+    return RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
 
 # To-Do 항목 삭제
 @app.delete("/todos/{todo_id}", response_model=dict)
