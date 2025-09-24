@@ -10,12 +10,13 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette import status
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = FastAPI()
 
 # Jinja Template Loading을 위한 초기화.
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 # Static file serving
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
 
 class TodoItem(BaseModel):
@@ -30,7 +31,7 @@ class TodoItemOut(TodoItem):
 
 
 # JSON 파일 경로
-TODO_FILE = "todo.json"
+TODO_FILE = "../todo.json"
 
 
 # JSON 파일에서 To-Do 항목 로드
