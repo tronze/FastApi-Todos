@@ -2,3 +2,8 @@ fastapi
 uvicorn[standard]
 jinja2
 python-multipart
+pytest
+pytest-html
+httpx
+pytest-cov
+bs4
