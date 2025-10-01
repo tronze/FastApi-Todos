@@ -44,9 +44,9 @@
                 <h2>Oops, you seems to have no work to do</h2>
             </div>
             {% endif %}
-            <div class="list-group">
+            <div id="todo-list" class="list-group">
                 {% for todo in todos %}
-                <div class="list-group-item list-group-item flex-column align-items-start{% if todo.completed %} list-group-item-success{% endif %}">
+                <div class="list-group-item flex-column align-items-start{% if todo.completed %} list-group-item-success{% endif %}">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="{% if todo.completed %}text-decoration-line-through text-secondary{% endif %}">{{
                             todo.title }}</h5>
