@@ -31,7 +31,7 @@ class TodoItemOut(TodoItem):
 
 
 # JSON 파일 경로
-TODO_FILE = "../todo.json"
+TODO_FILE = os.path.join(BASE_DIR, "todo.json")
 
 
 # JSON 파일에서 To-Do 항목 로드
