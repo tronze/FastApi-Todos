@@ -1,13 +1,4 @@
-import sys
-import os
-
 from bs4 import BeautifulSoup
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC_DIR = os.path.join(BASE_DIR, "src")
-print(BASE_DIR)
-print(SRC_DIR)
-sys.path.insert(0, SRC_DIR)
 
 import pytest
 from fastapi.testclient import TestClient
