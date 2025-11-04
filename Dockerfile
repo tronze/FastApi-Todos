@@ -5,9 +5,9 @@ RUN addgroup --system app && adduser --system --ingroup app --uid 10001 app && m
 
 WORKDIR /code
 
-COPY --chown=app:app ./src /code
+COPY ./src /code
 
-COPY --chown=app:app ./requirements-prod.txt /code
+COPY ./requirements-prod.txt /code
 
 RUN pip3 install --no-cache-dir -r /code/requirements-prod.txt
 
