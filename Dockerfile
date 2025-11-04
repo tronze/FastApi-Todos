@@ -1,9 +1,7 @@
 # <django_project>/Dockerfile-dev
 FROM python:3.11-slim
 
-RUN addgroup --system app && adduser --system --ingroup app --uid 10001 app
-
-RUN mkdir /code
+RUN addgroup --system app && adduser --system --ingroup app --uid 10001 app && mkdir /code
 
 WORKDIR /code
 
