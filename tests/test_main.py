@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 import pytest
+import os
 from fastapi.testclient import TestClient
 from main import app, save_todos, TodoItemOut, load_todos
 
@@ -14,6 +15,18 @@ def setup_and_teardown():
     yield
     # 테스트 후 정리
     save_todos([])
+
+
+def test_load_todos_returns_empty_when_file_missing(tmp_path, monkeypatch):
+    # main.TODO_FILE을 존재하지 않는 임시 경로로 변경
+    missing_file = tmp_path / "todo.json"
+    monkeypatch.setattr("main.TODO_FILE", str(missing_file), raising=False)
+
+    # 파일이 실제로 존재하지 않음을 보장
+    assert not os.path.exists(missing_file)
+
+    # 이제 load_todos는 존재하지 않는 파일 경로를 보게 되어 빈 리스트를 반환해야 함
+    assert load_todos() == []
 
 
 def test_get_todos_empty():
