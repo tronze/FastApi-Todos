@@ -5,7 +5,7 @@ RUN addgroup --system app && adduser --system --ingroup app --uid 10001 app && m
 
 WORKDIR /code
 
-COPY ./src /code
+COPY --chown=app:app ./src /code
 
 COPY ./requirements-prod.txt /code
 
