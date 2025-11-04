@@ -47,7 +47,7 @@ def load_todos():
 
 # JSON 파일에 To-Do 항목 저장
 def save_todos(todos):
-    # 상위 디렉터리가 없으면 생성 (예: TODO_FILE=/data/todo.json)
+    # 상위 디렉터리가 없으면 생성
     os.makedirs(os.path.dirname(TODO_FILE), exist_ok=True)
     with open(TODO_FILE, "w") as file:
         json.dump(todos, file, indent=4)
