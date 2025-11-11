@@ -7,3 +7,4 @@ pytest-html
 httpx
 pytest-cov
 bs4
+prometheus-fastapi-instrumentator
