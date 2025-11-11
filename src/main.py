@@ -10,8 +10,12 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette import status
 
+from prometheus_fastapi_instrumentator import Instrumentator
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = FastAPI()
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 # Jinja Template Loading을 위한 초기화.
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
