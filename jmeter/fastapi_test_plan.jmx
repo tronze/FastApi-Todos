@@ -47,11 +47,13 @@
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
-        <BackendListener guiclass="BackendListenerGui"
+      </ThreadGroup>
+      <hashTree>
+      <BackendListener guiclass="BackendListenerGui"
                          testclass="BackendListener"
                          testname="InfluxDB Backend Listener"
                          enabled="true">
-          <elementProp name="arguments" elementType="Arguments">
+            <elementProp name="arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
 
               <!-- InfluxDB 1.x 호환 write endpoint -->
@@ -86,13 +88,11 @@
               </elementProp>
 
             </collectionProp>
-          </elementProp>
-          <stringProp name="classname">
+            </elementProp>
+            <stringProp name="classname">
             org.apache.jmeter.visualizers.backend.influxdb.InfluxdbBackendListenerClient
-          </stringProp>
-        </BackendListener>
-      </ThreadGroup>
-      <hashTree>
+            </stringProp>
+            </BackendListener>
         <!-- 샘플러 1: GET / (루트 엔드포인트 테스트) -->
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
