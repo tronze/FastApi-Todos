@@ -136,7 +136,7 @@
         <hashTree/>
 
         <!-- 샘플러 2: POST /users (사용자 생성) -->
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /todos" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
 
@@ -160,7 +160,7 @@
             <stringProp name="HTTPSampler.domain">localhost</stringProp>
             <stringProp name="HTTPSampler.port">8000</stringProp>
             <stringProp name="HTTPSampler.protocol">http</stringProp>
-            <stringProp name="HTTPSampler.path">/todos</stringProp>
+            <stringProp name="HTTPSampler.path">/</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
 
             <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp> <!-- 반드시 false -->
