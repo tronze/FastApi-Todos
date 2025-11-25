@@ -120,3 +120,5 @@ volumes:
   sonarqube_logs:
   sonarqube_extensions:
   grafana-data:
+  influxdb2_data:
+  influxdb2_config:
