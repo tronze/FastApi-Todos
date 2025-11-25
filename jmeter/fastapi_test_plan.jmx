@@ -62,13 +62,23 @@
           <elementProp name="arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
 
-              <!-- InfluxDB 1.x 호환 write endpoint (InfluxDB 2.x에서 compat API 켜두면 사용 가능) -->
+              <!-- 필수 -->
               <elementProp name="influxdbUrl" elementType="Argument">
                 <stringProp name="Argument.name">influxdbUrl</stringProp>
                 <stringProp name="Argument.value">http://influxdb:8086/write?db=jmeter</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
 
+              <!-- ✅ 추가: Sender 클래스 (없으면 NPE) -->
+              <elementProp name="influxdbMetricsSender" elementType="Argument">
+                <stringProp name="Argument.name">influxdbMetricsSender</stringProp>
+                <stringProp name="Argument.value">
+                  org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender
+                </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+
+              <!-- 선택(권장 기본값들) -->
               <elementProp name="application" elementType="Argument">
                 <stringProp name="Argument.name">application</stringProp>
                 <stringProp name="Argument.value">fastapi-loadtest</stringProp>
@@ -90,6 +100,13 @@
               <elementProp name="samplersRegex" elementType="Argument">
                 <stringProp name="Argument.name">samplersRegex</stringProp>
                 <stringProp name="Argument.value">.*</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+
+              <!-- (선택) 퍼센타일 쓰고 싶으면 -->
+              <elementProp name="percentiles" elementType="Argument">
+                <stringProp name="Argument.name">percentiles</stringProp>
+                <stringProp name="Argument.value">90;95;99</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
 
