@@ -36,6 +36,28 @@ services:
     networks:
       - loadtest-net
 
+  influxdb:
+    image: influxdb:2.7
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb2_data:/var/lib/influxdb2
+      - influxdb2_config:/etc/influxdb2
+    environment:
+      # 초기 셋업 자동화
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: admin1234
+      DOCKER_INFLUXDB_INIT_ORG: todo-app
+      DOCKER_INFLUXDB_INIT_BUCKET: jmeter
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: my-jmeter-token
+
+      # ✅ InfluxDB 1.x 호환 API 활성화
+      INFLUXD_HTTP_BIND_ADDRESS: ":8086"
+      INFLUXD_HTTP_FLUX_ENABLED: "true"
+      INFLUXD_HTTP_AUTH_ENABLED: "false"  # 필요하면 true로 바꾸고 JMeter에 user/pass 설정
+      INFLUXD_HTTP_1X_COMPATIBILITY_API_ENABLED: "true"
+
   grafana:
     image: grafana/grafana:latest
     ports:
