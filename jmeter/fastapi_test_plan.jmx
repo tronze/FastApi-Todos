@@ -72,9 +72,7 @@
               <!-- ✅ 추가: Sender 클래스 (없으면 NPE) -->
               <elementProp name="influxdbMetricsSender" elementType="Argument">
                 <stringProp name="Argument.name">influxdbMetricsSender</stringProp>
-                <stringProp name="Argument.value">
-                  org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender
-                </stringProp>
+                <stringProp name="Argument.value">org.apache.jmeter.visualizers.backend.influxdb.HttpMetricsSender</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
 
