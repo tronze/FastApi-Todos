@@ -57,6 +57,8 @@ services:
       INFLUXD_HTTP_FLUX_ENABLED: "true"
       INFLUXD_HTTP_AUTH_ENABLED: "false"  # 필요하면 true로 바꾸고 JMeter에 user/pass 설정
       INFLUXD_HTTP_1X_COMPATIBILITY_API_ENABLED: "true"
+    networks:
+      - loadtest-net
 
   grafana:
     image: grafana/grafana:latest
