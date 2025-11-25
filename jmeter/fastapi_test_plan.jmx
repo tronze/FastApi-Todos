@@ -17,6 +17,7 @@
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
+
     <hashTree>
       <!-- HTTP Request Defaults: 모든 HTTP 요청의 기본 설정 -->
       <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
@@ -35,6 +36,7 @@
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
       </ConfigTestElement>
       <hashTree/>
+
       <!-- Thread Group: 사용자 10명, 10초 램프업, 1회 루프 -->
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="FastAPI Load Test" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -48,15 +50,19 @@
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
+
+      <!-- ✅ ThreadGroup의 자식 요소들은 아래 hashTree 안에 위치해야 함 -->
       <hashTree>
-      <BackendListener guiclass="BackendListenerGui"
+
+        <!-- Backend Listener: InfluxDB로 실시간 전송 -->
+        <BackendListener guiclass="BackendListenerGui"
                          testclass="BackendListener"
                          testname="InfluxDB Backend Listener"
                          enabled="true">
-            <elementProp name="arguments" elementType="Arguments">
+          <elementProp name="arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
 
-              <!-- InfluxDB 1.x 호환 write endpoint -->
+              <!-- InfluxDB 1.x 호환 write endpoint (InfluxDB 2.x에서 compat API 켜두면 사용 가능) -->
               <elementProp name="influxdbUrl" elementType="Argument">
                 <stringProp name="Argument.name">influxdbUrl</stringProp>
                 <stringProp name="Argument.value">http://influxdb:8086/write?db=jmeter</stringProp>
@@ -88,11 +94,13 @@
               </elementProp>
 
             </collectionProp>
-            </elementProp>
-            <stringProp name="classname">
+          </elementProp>
+          <stringProp name="classname">
             org.apache.jmeter.visualizers.backend.influxdb.InfluxdbBackendListenerClient
-            </stringProp>
-            </BackendListener>
+          </stringProp>
+        </BackendListener>
+        <hashTree/>
+
         <!-- 샘플러 1: GET / (루트 엔드포인트 테스트) -->
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -111,6 +119,7 @@
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
+
         <!-- 샘플러 2: POST /users (사용자 생성) -->
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POST /users" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -138,6 +147,7 @@
           <stringProp name="HTTPSampler.contentEncoding">application/json</stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
+
         <!-- 샘플러 3: GET /users (전체 사용자 조회) -->
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GET /users" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
@@ -156,6 +166,7 @@
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
+
         <!-- 추가 샘플러를 필요에 따라 추가할 수 있습니다. 예를 들어 GET /metrics, POST /items, GET /items, 등 -->
       </hashTree>
     </hashTree>
