@@ -6,10 +6,19 @@ services:
       context: .      # Dockerfile이 위치한 디렉토리 경로
       dockerfile: Dockerfile      # Dockerfile 이름 (생략 가능, 기본값은 'Dockerfile')
     container_name: FastApi-Todos
+    depends_on:
+      - loki
+    environment:
+      - LOKI_ENDPOINT=http://loki:3100/loki/api/v1/push
     ports:
       - "8000:8000"
     networks:
       - loadtest-net
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
 
   sonarqube:
     image: sonarqube:latest

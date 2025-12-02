@@ -1,3 +1,4 @@
 fastapi[standard]
 jinja2
 prometheus-fastapi-instrumentator
+python-logging-loki==0.3.1
